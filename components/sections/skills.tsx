@@ -48,8 +48,8 @@ export default function Skills() {
       description: "How I work and organize yourself in a professional environment.",
       skills: [
         "Agile",
-        "TDD (if you do it, you can include it)",
-        "Clean Code (also optional if applicable)",
+        "TDD ",
+        "Clean Code",
       ],
     },
     {

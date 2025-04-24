@@ -44,8 +44,9 @@ export default function Hero() {
             {t("hero.viewProjects")}
           </Link>
           <a
-            href={language === "en" ? "/files/resume.pdf" : "/files/juan-martin-canguillen-cv.pdf"}
-            download
+            href="https://docs.google.com/document/d/19qcrazJjMMUIcsCPT7iDO9Y5XjeOd8Fu9lsQBKJwLM0/edit?tab=t.0"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-gray-800/50 text-teal-400 border border-teal-500/30 font-medium px-6 py-3 rounded-full hover:shadow-[0_0_15px_rgba(45,212,191,0.5)] transition-all duration-300"
           >
             <span>📄</span> {t("hero.downloadCV")}

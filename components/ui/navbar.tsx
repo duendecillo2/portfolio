@@ -57,6 +57,7 @@ export default function Navbar() {
                 {item.name}
               </Link>
             ))}
+            {/* Removed potential Download CV button from here */}
             <LanguageSwitcher />
           </div>
 

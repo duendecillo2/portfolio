@@ -95,15 +95,6 @@ export default function About() {
           </div>
 
           <div className="mt-6">
-            <Link
-              href="../../public/resume-CanguillenJuanMartin.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block px-6 py-3 bg-teal-500 text-white font-semibold rounded-lg shadow-md hover:bg-teal-600 transition-colors"
-              download
-            >
-              Download CV
-            </Link>
           </div>
         </div>
       </div>

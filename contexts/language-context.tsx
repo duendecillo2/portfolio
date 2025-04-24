@@ -17,34 +17,43 @@ interface LanguageProviderProps {
 }
 
 export function LanguageProvider({ children }: LanguageProviderProps) {
-  const [language, setLanguage] = useState<Language>("en")
-  const [mounted, setMounted] = useState(false)
+  const [language, setLanguage] = useState<Language>("en"); // Default to 'en'
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true)
-    // Check if there's a saved language preference
-    const savedLanguage = localStorage.getItem("language") as Language
-    if (savedLanguage) {
-      setLanguage(savedLanguage)
+    setMounted(true);
+    // Check localStorage only on the client after mount
+    const savedLanguage = localStorage.getItem("language") as Language;
+    let initialLang: Language = "en";
+    if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'es')) {
+      initialLang = savedLanguage;
+      setLanguage(savedLanguage);
     }
-  }, [])
+    // Update HTML lang attribute initially
+    document.documentElement.lang = initialLang;
+  }, []); // Runs only once on mount
 
   const handleSetLanguage = (newLanguage: Language) => {
-    setLanguage(newLanguage)
-    localStorage.setItem("language", newLanguage)
-  }
+    if (newLanguage === language) return; // Avoid unnecessary updates
+    setLanguage(newLanguage);
+    localStorage.setItem("language", newLanguage);
+    document.documentElement.lang = newLanguage; // Update HTML lang attribute on change
+  };
 
   const t = (key: string): string => {
-    if (!mounted) return translations.en[key] || key
-
-    return translations[language][key] || key
-  }
+    // Before hydration, return default language or key to avoid mismatch
+    if (!mounted) {
+      return translations.en[key] || key;
+    }
+    // After hydration, use the current state language
+    return translations[language]?.[key] || key; // Use optional chaining for safety
+  };
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t }}>
       {children}
     </LanguageContext.Provider>
-  )
+  );
 }
 
 export function useLanguage() {
@@ -70,7 +79,7 @@ const translations: Record<Language, Record<string, string>> = {
     "hero.title": "Juan Martin Canguillen",
     "hero.subtitle": "Information Systems Engineering Student · Junior Full Stack Developer",
     "hero.viewProjects": "View Projects",
-    "hero.downloadCV": "Download CV",
+    "hero.downloadCV": "Download Resume",
 
     // About
     "about.title": "About Me",
@@ -142,6 +151,7 @@ const translations: Record<Language, Record<string, string>> = {
     "projects.technologies": "Technologies Used",
     "projects.projectGallery": "Project Gallery",
     "projects.demoVideo": "Demo Video",
+    "projects.description": "Description",
 
     // Achievements
     "achievements.title": "Achievements",
@@ -182,7 +192,7 @@ const translations: Record<Language, Record<string, string>> = {
     "hero.title": "Juan Martin Canguillen",
     "hero.subtitle": "Estudiante de Ingeniería en Sistemas · Desarrollador Full Stack Junior",
     "hero.viewProjects": "Ver Proyectos",
-    "hero.downloadCV": "Descargar CV",
+    "hero.downloadCV": "Descargar Curriculum Vitae", // Updated Spanish translation
 
     // About
     "about.title": "Sobre Mí",
@@ -254,6 +264,7 @@ const translations: Record<Language, Record<string, string>> = {
     "projects.technologies": "Tecnologías Utilizadas",
     "projects.projectGallery": "Galería del Proyecto",
     "projects.demoVideo": "Video de Demostración",
+    "projects.description": "Descripción",
 
     // Achievements
     "achievements.title": "Logros",
