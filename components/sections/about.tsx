@@ -6,6 +6,7 @@ import { Code, Briefcase, GraduationCap, MapPin } from "lucide-react"
 import SectionHeading from "@/components/ui/section-heading"
 import { cn } from "@/lib/utils"
 import { useLanguage } from "@/contexts/language-context"
+import Link from "next/link"
 
 export default function About() {
   const [mounted, setMounted] = useState(false)
@@ -91,6 +92,18 @@ export default function About() {
                 </div>
               </div>
             ))}
+          </div>
+
+          <div className="mt-6">
+            <Link
+              href="../../public/resume-CanguillenJuanMartin.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block px-6 py-3 bg-teal-500 text-white font-semibold rounded-lg shadow-md hover:bg-teal-600 transition-colors"
+              download
+            >
+              Download CV
+            </Link>
           </div>
         </div>
       </div>

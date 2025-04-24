@@ -6,6 +6,7 @@ import Experience from "@/components/sections/experience"
 import Projects from "@/components/sections/projects"
 import Achievements from "@/components/sections/achievements"
 import Contact from "@/components/sections/contact"
+import Link from "next/link"
 
 export default function Home() {
   return (
@@ -13,6 +14,15 @@ export default function Home() {
       <div className="fixed inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
       <Navbar />
       <div className="container mx-auto px-4 relative z-10">
+        <Link
+          href="/public/files/resume-CanguillenJuanMartin.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block px-6 py-3 bg-teal-500 text-white font-semibold rounded-lg shadow-md hover:bg-teal-600 transition-colors"
+          download
+        >
+          Download CV
+        </Link>
         <Hero />
         <About />
         <Skills />
