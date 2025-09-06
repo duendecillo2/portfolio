@@ -32,6 +32,8 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
   const handleSetLanguage = (newLanguage: Language) => {
     setLanguage(newLanguage)
     localStorage.setItem("language", newLanguage)
+    // Force an update to any component using translations
+    document.dispatchEvent(new Event('languageChanged'))
   }
 
   const t = (key: string): string => {
@@ -95,6 +97,42 @@ const translations: Record<Language, Record<string, string>> = {
     "skills.category2": "Frameworks & Tools",
     "skills.category3": "Concepts",
     "skills.category4": "Languages",
+
+    // Skills detailed sections
+    "skills.core.title": "Core Skills",
+    "skills.core.description": "The essentials.",
+    "skills.core.skill1": "Languages: Python, JavaScript, C, C#, HTML/CSS, SQL",
+    "skills.core.skill2": "Paradigms: Object-Oriented Programming (OOP), Functional Programming, Logic Programming",
+    "skills.core.skill3": "Low-level: Advanced C (Kernel dev), Assembler x86, Bash",
+
+    "skills.frameworks.title": "Frameworks, Libraries & Tools",
+    "skills.frameworks.description": "Things I use daily as a developer.",
+    "skills.frameworks.skill1": "Django, NestJS, React, Node.js, Bootstrap, Tailwind CSS",
+    "skills.frameworks.skill2": "Git, Linux, Docker, Nginx, Zustand, React Query",
+    "skills.frameworks.skill3": "SQLite, MySQL, PostgreSQL, Redis",
+
+    "skills.architecture.title": "Software Architecture & Design",
+    "skills.architecture.description": "This includes my formal training and ability to build well-thought-out software.",
+    "skills.architecture.skill1": "MVC, REST APIs",
+    "skills.architecture.skill2": "SOLID & GRASP Principles",
+    "skills.architecture.skill3": "GoF Design Patterns",
+    "skills.architecture.skill4": "UML, BPMN",
+
+    "skills.methodologies.title": "Methodologies & Practices",
+    "skills.methodologies.description": "How I work and organize myself in a professional environment.",
+    "skills.methodologies.skill1": "Agile",
+    "skills.methodologies.skill2": "TDD",
+    "skills.methodologies.skill3": "Clean Code",
+
+    "skills.other.title": "Other Languages & Tech",
+    "skills.other.description": "More niche things.",
+    "skills.other.skill1": "Haskell, Prolog, Smalltalk",
+
+    "skills.languages.title": "Languages",
+    "skills.languages.description": "Natural languages.",
+    "skills.languages.skill1": "Spanish (Native)",
+    "skills.languages.skill2": "English (C1 - Advanced)",
+    "skills.languages.skill3": "Portuguese (A2)",
 
     // Experience
     "experience.title": "Experience & Education",
@@ -208,6 +246,42 @@ const translations: Record<Language, Record<string, string>> = {
     "skills.category2": "Frameworks y Herramientas",
     "skills.category3": "Conceptos",
     "skills.category4": "Idiomas",
+
+    // Skills detailed sections
+    "skills.core.title": "Habilidades Principales",
+    "skills.core.description": "Lo esencial.",
+    "skills.core.skill1": "Lenguajes: Python, JavaScript, C, C#, HTML/CSS, SQL",
+    "skills.core.skill2": "Paradigmas: Programación Orientada a Objetos (POO), Programación Funcional, Programación Lógica",
+    "skills.core.skill3": "Bajo nivel: C Avanzado (dev de Kernel), Assembler x86, Bash",
+
+    "skills.frameworks.title": "Frameworks, Librerías y Herramientas",
+    "skills.frameworks.description": "Lo que uso a diario como desarrollador.",
+    "skills.frameworks.skill1": "Django, NestJS, React, Node.js, Bootstrap, Tailwind CSS",
+    "skills.frameworks.skill2": "Git, Linux, Docker, Nginx, Zustand, React Query",
+    "skills.frameworks.skill3": "SQLite, MySQL, PostgreSQL, Redis",
+
+    "skills.architecture.title": "Arquitectura y Diseño de Software",
+    "skills.architecture.description": "Esto incluye mi formación formal y capacidad para construir software bien diseñado.",
+    "skills.architecture.skill1": "MVC, APIs REST",
+    "skills.architecture.skill2": "Principios SOLID y GRASP",
+    "skills.architecture.skill3": "Patrones de Diseño GoF",
+    "skills.architecture.skill4": "UML, BPMN",
+
+    "skills.methodologies.title": "Metodologías y Prácticas",
+    "skills.methodologies.description": "Cómo trabajo y me organizo en un entorno profesional.",
+    "skills.methodologies.skill1": "Agile",
+    "skills.methodologies.skill2": "TDD",
+    "skills.methodologies.skill3": "Clean Code",
+
+    "skills.other.title": "Otros Lenguajes y Tecnologías",
+    "skills.other.description": "Cosas más específicas.",
+    "skills.other.skill1": "Haskell, Prolog, Smalltalk",
+
+    "skills.languages.title": "Idiomas",
+    "skills.languages.description": "Lenguajes naturales.",
+    "skills.languages.skill1": "Español (Nativo)",
+    "skills.languages.skill2": "Inglés (C1 - Avanzado)",
+    "skills.languages.skill3": "Portugués (A2)",
 
     // Experience
     "experience.title": "Experiencia y Educación",

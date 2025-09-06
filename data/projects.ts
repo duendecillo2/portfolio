@@ -1,7 +1,7 @@
 "use client"
 
 import { useLanguage } from "@/contexts/language-context"
-import { useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 export interface Project {
   id: string
@@ -18,9 +18,22 @@ export interface Project {
 }
 
 export function useProjects() {
-  const { t, language } = useLanguage(); // Add language dependency
+  const { t, language } = useLanguage();
+  const [forceUpdate, setForceUpdate] = useState(0);
+  
+  // Force update when language changes
+  useEffect(() => {
+    const handleLanguageChange = () => {
+      setForceUpdate(prev => prev + 1);
+    };
+    
+    document.addEventListener('languageChanged', handleLanguageChange);
+    return () => {
+      document.removeEventListener('languageChanged', handleLanguageChange);
+    };
+  }, []);
 
-  // Use useMemo to re-calculate projects only when language changes
+  // Use useMemo to re-calculate projects when language changes
   const projects: Project[] = useMemo(() => [
     {
       id: "auction-website",
@@ -69,7 +82,7 @@ export function useProjects() {
       ],
       videoId: "kF1iR2oSZmc",
     },
-  ], [t, language]); // Add t and language as dependencies
+  ], [t, language, forceUpdate]); // Add dependencies including forceUpdate
 
   return projects;
 }

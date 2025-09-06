@@ -16,51 +16,61 @@ export default function Skills() {
 
   const skillCategories = [
     {
-      title: "🧠 Core Skills",
-      description: "The essentials.",
+      title: "🧠 " + t("skills.core.title"),
+      description: t("skills.core.description"),
       skills: [
-        "Languages: Python, JavaScript, C, C#, HTML/CSS, SQL",
-        "Paradigms: Object-Oriented Programming (OOP), Functional Programming, Logic Programming",
-        "Low-level: Advanced C (Kernel dev), Assembler x86, Bash",
+        t("skills.core.skill1"),
+        t("skills.core.skill2"),
+        t("skills.core.skill3"),
       ],
+      icon: <Code className="h-5 w-5" />,
     },
     {
-      title: "🛠️ Frameworks, Libraries & Tools",
-      description: "Things I use daily as a developer.",
+      title: "🛠️ " + t("skills.frameworks.title"),
+      description: t("skills.frameworks.description"),
       skills: [
-        "Django, React, Node.js, Bootstrap",
-        "Git, Linux",
-        "SQLite, MySQL, PostgreSQL",
+        t("skills.frameworks.skill1"),
+        t("skills.frameworks.skill2"),
+        t("skills.frameworks.skill3"),
       ],
+      icon: <Server className="h-5 w-5" />,
     },
     {
-      title: "🧩 Software Architecture & Design",
-      description: "This includes my formal training and ability to build well-thought-out software.",
+      title: "🧩 " + t("skills.architecture.title"),
+      description: t("skills.architecture.description"),
       skills: [
-        "MVC, REST APIs",
-        "SOLID & GRASP Principles",
-        "GoF Design Patterns",
-        "UML, BPMN",
+        t("skills.architecture.skill1"),
+        t("skills.architecture.skill2"),
+        t("skills.architecture.skill3"),
+        t("skills.architecture.skill4"),
       ],
+      icon: <Brain className="h-5 w-5" />,
     },
     {
-      title: "🚀 Methodologies & Practices",
-      description: "How I work and organize yourself in a professional environment.",
+      title: "🚀 " + t("skills.methodologies.title"),
+      description: t("skills.methodologies.description"),
       skills: [
-        "Agile",
-        "TDD ",
-        "Clean Code",
+        t("skills.methodologies.skill1"),
+        t("skills.methodologies.skill2"),
+        t("skills.methodologies.skill3"),
       ],
+      icon: <Brain className="h-5 w-5" />,
     },
     {
-      title: "🧬 Other Languages & Tech",
-      description: "More niche things.",
-      skills: ["Haskell, Prolog, Smalltalk"],
+      title: "🧬 " + t("skills.other.title"),
+      description: t("skills.other.description"),
+      skills: [t("skills.other.skill1")],
+      icon: <Code className="h-5 w-5" />,
     },
     {
-      title: "🌐 Languages",
-      description: "Natural languages.",
-      skills: ["Spanish (Native)", "English (C1 - Advanced)", "Portuguese (A2)"],
+      title: "🌐 " + t("skills.languages.title"),
+      description: t("skills.languages.description"),
+      skills: [
+        t("skills.languages.skill1"),
+        t("skills.languages.skill2"), 
+        t("skills.languages.skill3")
+      ],
+      icon: <Palette className="h-5 w-5" />,
     },
   ]
 
