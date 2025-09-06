@@ -85,7 +85,7 @@ export default function ProjectPage() {
           <div className="space-y-8">
             {/* Project Description */}
             <section className="bg-gray-900/30 backdrop-blur-sm p-6 rounded-xl border border-gray-800/50">
-              <h2 className="text-xl font-semibold text-gray-200 mb-4">{t("projects.description")}</h2>
+              <h2 className="text-xl font-semibold text-gray-200 mb-4">Description</h2>
               <div className="text-gray-300 space-y-4">
                 {(project.longDescription || project.description).split("\n\n").map((paragraph, index) => (
                   <p key={index}>{paragraph}</p>
