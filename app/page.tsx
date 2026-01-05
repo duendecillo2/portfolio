@@ -1,28 +1,32 @@
-import Navbar from "@/components/ui/navbar"
-import Hero from "@/components/sections/hero"
-import About from "@/components/sections/about"
-import Skills from "@/components/sections/skills"
-import Experience from "@/components/sections/experience"
-import Projects from "@/components/sections/projects"
-import Achievements from "@/components/sections/achievements"
-import Contact from "@/components/sections/contact"
-import Link from "next/link"
+import { Navbar } from "@/components/ui/navbar";
+import { Hero } from "@/components/sections/hero";
+import { Skills } from "@/components/sections/skills";
+import { Experience } from "@/components/sections/experience";
+import { Education } from "@/components/sections/education";
+import { Certifications } from "@/components/sections/certifications";
+import { International } from "@/components/sections/international";
+import { Projects } from "@/components/sections/projects";
+import { Contact } from "@/components/sections/contact";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-gray-100 overflow-hidden">
-      <div className="fixed inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
+    <main className="min-h-screen bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary">
       <Navbar />
-      <div className="container mx-auto px-4 relative z-10">
-    
+      
+      <div className="relative isolate">
         <Hero />
-        <About />
         <Skills />
         <Experience />
+        <Education />
+        <Certifications />
+        <International />
         <Projects />
-        <Achievements />
         <Contact />
+        
+        <footer className="py-6 text-center text-sm text-muted-foreground border-t border-border/40">
+          <p>© {new Date().getFullYear()} Juan Martin Canguillen. Built with Next.js & Tailwind.</p>
+        </footer>
       </div>
     </main>
-  )
+  );
 }

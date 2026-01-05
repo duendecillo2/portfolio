@@ -1,119 +1,89 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Code, Server, Palette, Brain } from "lucide-react"
-import SectionHeading from "@/components/ui/section-heading"
-import { cn } from "@/lib/utils"
-import { useLanguage } from "@/contexts/language-context"
+import { motion } from "framer-motion";
+import { Database, Server, Terminal, Code2, Globe, Cpu, Workflow, Bot } from "lucide-react";
 
-export default function Skills() {
-  const [mounted, setMounted] = useState(false)
-  const { t } = useLanguage()
+const skillCategories = [
+  {
+    title: "AI & Automation",
+    icon: <Bot className="w-5 h-5" />,
+    color: "text-rose-400 bg-rose-400/10",
+    skills: ["LLM Integration", "RAG/RACS Architectures", "Evolution API", "Local AI Models", "n8n Workflows", "Cursor & Copilot"],
+  },
+  {
+    title: "Backend Frameworks",
+    icon: <Server className="w-5 h-5" />,
+    color: "text-indigo-400 bg-indigo-400/10",
+    skills: ["Django (Expert)", "NestJS (Expert)", "FastAPI", "Node.js", "Microservices", "REST & GraphQL"],
+  },
+  {
+    title: "Languages & Electronics",
+    icon: <Cpu className="w-5 h-5" />,
+    color: "text-orange-400 bg-orange-400/10",
+    skills: ["Python", "C++", "C#", "C", "SQL", "Arduino", "Raspberry Pi", "Bash"],
+  },
+  {
+    title: "Data & NoSQL",
+    icon: <Database className="w-5 h-5" />,
+    color: "text-emerald-400 bg-emerald-400/10",
+    skills: ["PostgreSQL", "MongoDB (NoSQL)", "Pandas", "ETL Pipelines", "Vector DBs", "Excel/Power BI"],
+  },
+  {
+    title: "DevOps & Infrastructure",
+    icon: <Terminal className="w-5 h-5" />,
+    color: "text-pink-400 bg-pink-400/10",
+    skills: ["Docker", "GitHub Actions", "Redis", "Linux", "AWS", "Nginx"],
+  },
+  {
+    title: "Frontend & Tools",
+    icon: <Globe className="w-5 h-5" />,
+    color: "text-cyan-400 bg-cyan-400/10",
+    skills: ["React", "Next.js", "TailwindCSS", "HTML/CSS", "Git", "Framer Motion"],
+  }
+];
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  const skillCategories = [
-    {
-      title: "🧠 " + t("skills.core.title"),
-      description: t("skills.core.description"),
-      skills: [
-        t("skills.core.skill1"),
-        t("skills.core.skill2"),
-        t("skills.core.skill3"),
-      ],
-      icon: <Code className="h-5 w-5" />,
-    },
-    {
-      title: "🛠️ " + t("skills.frameworks.title"),
-      description: t("skills.frameworks.description"),
-      skills: [
-        t("skills.frameworks.skill1"),
-        t("skills.frameworks.skill2"),
-        t("skills.frameworks.skill3"),
-      ],
-      icon: <Server className="h-5 w-5" />,
-    },
-    {
-      title: "🧩 " + t("skills.architecture.title"),
-      description: t("skills.architecture.description"),
-      skills: [
-        t("skills.architecture.skill1"),
-        t("skills.architecture.skill2"),
-        t("skills.architecture.skill3"),
-        t("skills.architecture.skill4"),
-      ],
-      icon: <Brain className="h-5 w-5" />,
-    },
-    {
-      title: "🚀 " + t("skills.methodologies.title"),
-      description: t("skills.methodologies.description"),
-      skills: [
-        t("skills.methodologies.skill1"),
-        t("skills.methodologies.skill2"),
-        t("skills.methodologies.skill3"),
-      ],
-      icon: <Brain className="h-5 w-5" />,
-    },
-    {
-      title: "🧬 " + t("skills.other.title"),
-      description: t("skills.other.description"),
-      skills: [t("skills.other.skill1")],
-      icon: <Code className="h-5 w-5" />,
-    },
-    {
-      title: "🌐 " + t("skills.languages.title"),
-      description: t("skills.languages.description"),
-      skills: [
-        t("skills.languages.skill1"),
-        t("skills.languages.skill2"), 
-        t("skills.languages.skill3")
-      ],
-      icon: <Palette className="h-5 w-5" />,
-    },
-  ]
-
+export function Skills() {
   return (
-    <section id="skills" className="py-20 relative scroll-mt-16">
-      <SectionHeading title={t("skills.title")} subtitle={t("skills.subtitle")} />
+    <section id="skills" className="py-20 md:py-32 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+      <div className="mb-12">
+        <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-foreground">
+          Technical <span className="text-emerald-400">Expertise</span>
+        </h2>
+        <p className="text-gray-400 max-w-2xl text-lg">
+          I specialize in robust backend systems. My toolkit is built around reliable, scalable, and maintainable technologies.
+        </p>
+      </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {skillCategories.map((category, index) => (
-          <div
+          <motion.div
             key={index}
-            className={cn(
-              "bg-gray-900/30 backdrop-blur-sm border border-gray-800/50 rounded-xl p-6 hover:border-teal-500/50 transition-all duration-500 opacity-0 transform translate-y-8",
-              mounted && "opacity-100 translate-y-0",
-              mounted && `transition-delay-${index * 100}`,
-            )}
-            style={{
-              transitionDelay: mounted ? `${index * 100}ms` : "0ms",
-            }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: index * 0.1 }}
+            className="p-6 rounded-xl bg-card/40 backdrop-blur-sm border border-white/5 hover:border-white/10 transition-colors group"
           >
-            <div className="flex flex-col h-full">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 bg-gray-800/50 rounded-lg text-teal-400">{category.icon}</div>
-                <h3 className="text-xl font-semibold text-gray-200">{category.title}</h3>
+            <div className="flex items-center gap-3 mb-6">
+              <div className={`p-2 rounded-lg ${category.color} group-hover:scale-110 transition-transform`}>
+                {category.icon}
               </div>
-
-              <div className="flex-grow">
-                <p className="text-gray-400 mb-4">{category.description}</p>
-                <ul className="space-y-3">
-                  {category.skills.map((skill, skillIndex) => (
-                    <li
-                      key={skillIndex}
-                      className="bg-gray-800/30 px-4 py-2 rounded-lg border border-gray-700/50 hover:border-teal-500/30 hover:shadow-[0_0_10px_rgba(45,212,191,0.15)] transition-all duration-300"
-                    >
-                      <span className="text-gray-300">{skill}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <h3 className="font-semibold text-lg text-gray-200">{category.title}</h3>
             </div>
-          </div>
+            
+            <div className="flex flex-wrap gap-2">
+              {category.skills.map((skill) => (
+                <span 
+                  key={skill} 
+                  className="px-3 py-1.5 text-sm bg-secondary/30 text-gray-300 rounded-md border border-white/5 hover:border-white/20 transition-colors cursor-default"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </motion.div>
         ))}
       </div>
     </section>
-  )
+  );
 }
