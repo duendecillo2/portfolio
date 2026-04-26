@@ -7,6 +7,7 @@ import { Certifications } from "@/components/sections/certifications";
 import { International } from "@/components/sections/international";
 import { Projects } from "@/components/sections/projects";
 import { Contact } from "@/components/sections/contact";
+import { SiteFooter } from "@/components/sections/site-footer";
 
 export default function Home() {
   return (
@@ -23,9 +24,7 @@ export default function Home() {
         <Projects />
         <Contact />
         
-        <footer className="py-6 text-center text-sm text-muted-foreground border-t border-border/40">
-          <p>© {new Date().getFullYear()} Juan Martin Canguillen. Built with Next.js & Tailwind.</p>
-        </footer>
+        <SiteFooter />
       </div>
     </main>
   );

@@ -10,7 +10,10 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Juan Martin Canguillen - Portfolio",
   description: "Personal portfolio of Juan Martin Canguillen, Full Stack Developer",
-  generator: 'v0.dev'
+  generator: "v0.dev",
+  icons: {
+    icon: "/favicon.svg",
+  },
 }
 
 export default function RootLayout({

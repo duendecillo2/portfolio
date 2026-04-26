@@ -4,8 +4,93 @@ import { motion } from "framer-motion";
 import { ArrowDown, Github, Linkedin, Mail, Database, Server, Code2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { useLanguage, type Language } from "@/contexts/language-context";
+
+const heroContent: Record<
+  Language,
+  {
+    openToWork: string
+    basedIn: string
+    role: string
+    paragraph1: string
+    paragraph2: string
+    viewArchitecture: string
+    downloadResume: string
+    focus: string
+    focusValue: string
+  }
+> = {
+  en: {
+    openToWork: "Open to work",
+    basedIn: "Buenos Aires based",
+    role: "Backend Software Engineer",
+    paragraph1:
+      "I architect scalable server-side systems and robust data pipelines. My expertise lies in NestJS, LLM, Next.js with React, TypeScript, System Design, and Software Architecture.",
+    paragraph2:
+      "With a semi-senior background and +4 years of experience, I combine technical autonomy with a product-driven mindset, bridging the gap between business logic and efficient database architecture.",
+    viewArchitecture: "View Architecture",
+    downloadResume: "Download Resume",
+    focus: "Focus",
+    focusValue: "System Design",
+  },
+  es: {
+    openToWork: "Disponible para trabajar",
+    basedIn: "Basado en Buenos Aires",
+    role: "Ingeniero de Software Backend",
+    paragraph1:
+      "Diseño sistemas backend escalables y pipelines de datos robustos. Mi experiencia principal está en NestJS, LLM, Next.js con React, TypeScript, diseño de sistemas y arquitectura de software.",
+    paragraph2:
+      "Con un perfil semi-senior y +4 años de experiencia, combino autonomía técnica con una visión orientada a producto, conectando la lógica de negocio con una arquitectura de datos eficiente.",
+    viewArchitecture: "Ver Arquitectura",
+    downloadResume: "Descargar CV",
+    focus: "Enfoque",
+    focusValue: "Diseño de Sistemas",
+  },
+  pt: {
+    openToWork: "Disponível para trabalhar",
+    basedIn: "Baseado em Buenos Aires",
+    role: "Engenheiro de Software Backend",
+    paragraph1:
+      "Projeto sistemas backend escaláveis e pipelines de dados robustos. Minha especialidade está em NestJS, LLM, Next.js com React, TypeScript, design de sistemas e arquitetura de software.",
+    paragraph2:
+      "Com perfil semi-sênior e +4 anos de experiência, combino autonomia técnica com mentalidade orientada a produto, conectando lógica de negócio e arquitetura de dados eficiente.",
+    viewArchitecture: "Ver Arquitetura",
+    downloadResume: "Baixar CV",
+    focus: "Foco",
+    focusValue: "Design de Sistemas",
+  },
+  ru: {
+    openToWork: "Открыт к предложениям",
+    basedIn: "Базируюсь в Буэнос-Айресе",
+    role: "Backend Software Engineer",
+    paragraph1:
+      "Проектирую масштабируемые серверные системы и надежные data-пайплайны. Основной стек: NestJS, LLM, Next.js с React, TypeScript, системный дизайн и архитектура ПО.",
+    paragraph2:
+      "Имея semi-senior уровень и +4 года опыта, я совмещаю техническую автономность с продуктовым мышлением, соединяя бизнес-логику и эффективную архитектуру данных.",
+    viewArchitecture: "Смотреть Архитектуру",
+    downloadResume: "Скачать Резюме",
+    focus: "Фокус",
+    focusValue: "Системный Дизайн",
+  },
+  zh: {
+    openToWork: "可接受新机会",
+    basedIn: "常驻布宜诺斯艾利斯",
+    role: "后端软件工程师",
+    paragraph1:
+      "我专注于设计可扩展的服务端系统与稳定的数据管道。核心能力包括 NestJS、LLM、Next.js + React、TypeScript、系统设计与软件架构。",
+    paragraph2:
+      "凭借 semi-senior 背景与 4 年以上经验，我将技术自主性与产品思维结合，把业务逻辑与高效数据架构连接起来。",
+    viewArchitecture: "查看架构",
+    downloadResume: "下载简历",
+    focus: "专注方向",
+    focusValue: "系统设计",
+  },
+}
 
 export function Hero() {
+  const { language } = useLanguage()
+  const content = heroContent[language]
+
   return (
     <section className="relative min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 pt-20 overflow-hidden">
       {/* Background Decor - More complex coloring */}
@@ -26,10 +111,10 @@ export function Hero() {
             <div className="flex items-center gap-2">
                <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-sm font-mono border border-emerald-500/20 flex items-center gap-2">
                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                 Open to work
+                 {content.openToWork}
                </span>
                <span className="text-sm font-mono text-muted-foreground tracking-wide uppercase">
-                 Buenos Aires based
+                 {content.basedIn}
                </span>
             </div>
             
@@ -41,7 +126,7 @@ export function Hero() {
             </h1>
             
             <h2 className="text-2xl md:text-3xl font-semibold text-muted-foreground">
-              Backend Software Engineer
+              {content.role}
             </h2>
           </motion.div>
 
@@ -52,14 +137,22 @@ export function Hero() {
             className="mt-6 max-w-2xl"
           >
             <p className="text-lg md:text-xl text-gray-400 leading-relaxed mb-6">
-              I architect scalable server-side systems and robust data pipelines.
-              My expertise lies in <span className="text-indigo-400 font-semibold">NestJS</span>,{" "}
-              <span className="text-emerald-400 font-semibold">Python (Django)</span>,{" "}
-              <span className="text-cyan-400 font-semibold">React</span>, and{" "}
-               <span className="text-purple-400 font-semibold">System Analysis</span>.
+              {language === "en" ? (
+                <>
+                  I architect scalable server-side systems and robust data pipelines. My expertise lies in{" "}
+                  <span className="text-indigo-400 font-semibold">NestJS</span>,{" "}
+                  <span className="text-emerald-400 font-semibold">LLM</span>,{" "}
+                  <span className="text-cyan-400 font-semibold">Next.js with React</span>,{" "}
+                  <span className="text-amber-400 font-semibold">TypeScript</span>,{" "}
+                  <span className="text-purple-400 font-semibold">System Design</span>, and{" "}
+                  <span className="text-pink-400 font-semibold">Software Architecture</span>.
+                </>
+              ) : (
+                content.paragraph1
+              )}
             </p>
             <p className="text-base text-gray-500">
-               With a semi-senior background +3 years in production, I combine technical autonomy with a product-driven mindset, bridging the gap between business logic and efficient database architecture.
+               {content.paragraph2}
             </p>
           </motion.div>
 
@@ -74,7 +167,7 @@ export function Hero() {
               className="inline-flex h-12 items-center justify-center rounded-lg bg-indigo-600 px-8 text-sm font-medium text-white shadow-lg shadow-indigo-500/20 transition-all hover:bg-indigo-500 hover:scale-105 hover:shadow-indigo-500/40 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-indigo-500"
             >
               <Server className="mr-2 h-4 w-4" />
-              View Architecture
+              {content.viewArchitecture}
             </Link>
             <Link
               href="/files/resume-CanguillenJuanMartin.pdf"
@@ -82,7 +175,7 @@ export function Hero() {
               className="inline-flex h-12 items-center justify-center rounded-lg border border-gray-700 bg-gray-900/50 px-8 text-sm font-medium text-gray-300 shadow-sm transition-all hover:bg-gray-800 hover:text-white hover:border-gray-600"
             >
               <Database className="mr-2 h-4 w-4" />
-              Download Resume
+              {content.downloadResume}
             </Link>
           </motion.div>
 
@@ -112,7 +205,7 @@ export function Hero() {
             <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500 to-purple-500 rounded-2xl blur-2xl opacity-40 animate-pulse" />
             <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-2xl overflow-hidden border-2 border-white/10 shadow-2xl bg-gray-900">
                <Image 
-                  src="/images/me.png" 
+                  src="/images/me.jpeg" 
                   alt="Juan Martin Canguillen" 
                   fill
                   className="object-cover"
@@ -130,8 +223,8 @@ export function Hero() {
                    <Code2 className="w-5 h-5 text-indigo-400" />
                  </div>
                  <div>
-                   <div className="text-xs text-gray-400 uppercase font-bold tracking-wider">Focus</div>
-                   <div className="text-sm font-semibold text-white">System Design</div>
+                   <div className="text-xs text-gray-400 uppercase font-bold tracking-wider">{content.focus}</div>
+                   <div className="text-sm font-semibold text-white">{content.focusValue}</div>
                  </div>
                </motion.div>
             </div>

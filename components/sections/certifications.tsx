@@ -1,19 +1,30 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Award, CheckCircle2, FileJson, BadgeCheck } from "lucide-react";
+import { Award, CheckCircle2, FileJson, BadgeCheck, Database } from "lucide-react";
+import { useLanguage, type Language } from "@/contexts/language-context";
 
 interface Certification {
   name: string;
   issuer: string;
   date: string;
   credentialId?: string;
+  description?: string;
   skills: string[];
   icon: React.ReactNode;
   color: string;
 }
 
 const certifications: Certification[] = [
+  {
+    name: "Databases and SQL",
+    issuer: "TodoCode",
+    date: "Mar 2026",
+    description: "Comprehensive review to strengthen core foundations in relational algebra and SQL/PLSQL.",
+    skills: ["SQL", "PL/SQL", "Relational Algebra", "Databases"],
+    icon: <Database className="w-6 h-6" />,
+    color: "text-indigo-400 bg-indigo-400/10",
+  },
   {
     name: "JavaScript with NodeJS",
     issuer: "Udemy",
@@ -83,7 +94,43 @@ const certifications: Certification[] = [
   },
 ];
 
+const certificationsContent: Record<Language, { headingStart: string; headingAccent: string; idLabel: string; translatedDescription: string }> = {
+  en: {
+    headingStart: "Licenses &",
+    headingAccent: "Certifications",
+    idLabel: "ID",
+    translatedDescription: "Comprehensive review to strengthen core foundations in relational algebra and SQL/PLSQL.",
+  },
+  es: {
+    headingStart: "Licencias y",
+    headingAccent: "Certificaciones",
+    idLabel: "ID",
+    translatedDescription: "Repaso integral para fortalecer los fundamentos de álgebra relacional y SQL/PLSQL.",
+  },
+  pt: {
+    headingStart: "Licenças e",
+    headingAccent: "Certificações",
+    idLabel: "ID",
+    translatedDescription: "Revisão abrangente para fortalecer fundamentos de álgebra relacional e SQL/PLSQL.",
+  },
+  ru: {
+    headingStart: "Лицензии и",
+    headingAccent: "Сертификаты",
+    idLabel: "ID",
+    translatedDescription: "Комплексный курс для укрепления базы по реляционной алгебре и SQL/PLSQL.",
+  },
+  zh: {
+    headingStart: "许可证与",
+    headingAccent: "认证",
+    idLabel: "编号",
+    translatedDescription: "系统复习关系代数与 SQL/PLSQL 核心基础。",
+  },
+}
+
 export function Certifications() {
+  const { language } = useLanguage()
+  const content = certificationsContent[language]
+
   return (
     <section id="certifications" className="py-20 md:py-32 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
       <motion.div
@@ -94,7 +141,7 @@ export function Certifications() {
         className="mb-12"
       >
         <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 text-foreground">
-          Licenses & <span className="text-indigo-500">Certifications</span>
+          {content.headingStart} <span className="text-indigo-500">{content.headingAccent}</span>
         </h2>
         <div className="h-1 w-20 bg-indigo-500 rounded-full"></div>
       </motion.div>
@@ -122,10 +169,11 @@ export function Certifications() {
               {cert.name}
             </h3>
             <p className="text-sm font-medium text-gray-400 mb-3">{cert.issuer}</p>
+            {cert.description && <p className="text-sm text-gray-400 mb-3">{cert.name === "Databases and SQL" ? content.translatedDescription : cert.description}</p>}
 
             {cert.credentialId && (
               <div className="text-xs text-gray-600 font-mono mb-4 break-all">
-                ID: {cert.credentialId}
+                {content.idLabel}: {cert.credentialId}
               </div>
             )}
 

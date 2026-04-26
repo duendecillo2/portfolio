@@ -4,19 +4,22 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLanguage } from "@/contexts/language-context"
+import LanguageSwitcher from "@/components/ui/language-switcher"
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const { t } = useLanguage()
 
   const navItems = [
-    { name: "Skills", href: "#skills" },
-    { name: "Experience", href: "#experience" },
-    { name: "Education", href: "#education" },
-    { name: "Certifications", href: "#certifications" },
-    { name: "Global", href: "#international" },
-    { name: "Projects", href: "#projects" },
-    { name: "Contact", href: "#contact" },
+    { name: t("nav.skills"), href: "#skills" },
+    { name: t("nav.experience"), href: "#experience" },
+    { name: t("nav.education"), href: "#education" },
+    { name: t("nav.certifications"), href: "#certifications" },
+    { name: t("nav.global"), href: "#international" },
+    { name: t("nav.projects"), href: "#projects" },
+    { name: t("nav.contact"), href: "#contact" },
   ]
 
   useEffect(() => {
@@ -45,7 +48,7 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-8">
             {navItems.map((item) => (
               <Link
                 key={item.name}
@@ -57,8 +60,13 @@ export function Navbar() {
             ))}
           </div>
 
+          <div className="hidden md:block">
+            <LanguageSwitcher />
+          </div>
+
           {/* Mobile Navigation Toggle */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-2">
+            <LanguageSwitcher />
             <button onClick={() => setIsOpen(!isOpen)} className="text-muted-foreground hover:text-primary transition-colors">
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>

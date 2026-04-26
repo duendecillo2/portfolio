@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 
-type Language = "en" | "es"
+export type Language = "en" | "es" | "pt" | "ru" | "zh"
 
 interface LanguageContextType {
   language: Language
@@ -23,8 +23,8 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
   useEffect(() => {
     setMounted(true)
     // Check if there's a saved language preference
-    const savedLanguage = localStorage.getItem("language") as Language
-    if (savedLanguage) {
+    const savedLanguage = localStorage.getItem("language")
+    if (savedLanguage && isSupportedLanguage(savedLanguage)) {
       setLanguage(savedLanguage)
     }
   }, [])
@@ -37,9 +37,10 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
   }
 
   const t = (key: string): string => {
-    if (!mounted) return translations.en[key] || key
+    if (!mounted) return translations.en?.[key] || key
 
-    return translations[language][key] || key
+    const selectedLanguage = translations[language] || translations.en || {}
+    return selectedLanguage[key] || translations.en?.[key] || key
   }
 
   return (
@@ -58,14 +59,16 @@ export function useLanguage() {
 }
 
 // Translations
-const translations: Record<Language, Record<string, string>> = {
+const translations: Partial<Record<Language, Record<string, string>>> = {
   en: {
     // Navbar
     "nav.about": "About",
     "nav.skills": "Skills",
     "nav.experience": "Experience",
+    "nav.education": "Education",
+    "nav.certifications": "Certifications",
+    "nav.global": "Global",
     "nav.projects": "Projects",
-    "nav.achievements": "Achievements",
     "nav.contact": "Contact",
 
     // Hero
@@ -173,6 +176,12 @@ const translations: Record<Language, Record<string, string>> = {
     "projects.project2.longDescription":
       "The Ticket Management System is a comprehensive solution designed to streamline the process of creating, tracking, and resolving support tickets. This full-stack application combines the power of Django on the backend with React on the frontend to deliver a seamless user experience.\n\nThe system features a robust authentication system with role-based access control, allowing different levels of access for administrators, support staff, and end-users. Users can create tickets, attach files, add comments, and track the status of their requests in real-time.\n\nThe admin panel provides powerful tools for managing tickets, including assignment capabilities, priority settings, categorization, and detailed reporting. The dashboard offers at-a-glance insights into ticket volumes, resolution times, and staff performance metrics.\n\nThe frontend was built with React and Bootstrap, creating a responsive and intuitive interface that works across all devices. The backend leverages Django's powerful ORM and REST framework to provide a secure and scalable API.\n\nThis project showcases my ability to build complex, data-driven applications with sophisticated user interfaces and robust backend systems.",
     "projects.project2.date": "2024",
+    "projects.project3.title": "Mundo Figus Store",
+    "projects.project3.description":
+      "Full-stack SEO-driven e-commerce platform designed to scale online sales and organic acquisition.",
+    "projects.project3.longDescription":
+      "Mundo Figus Store — Full-Stack E-commerce Platform\n\nDesigned and developed a scalable, SEO-driven e-commerce platform for a retail client seeking to expand market reach and increase online sales through organic traffic growth. Built the entire solution end-to-end, acting as Full-Stack Engineer + DevOps Owner.\n\nCore Responsibilities\n\nArchitected a production-grade platform using Next.js, NestJS, PostgreSQL, Docker, and automated CI/CD pipelines.\n\nEngineered an SEO-first storefront with server-side rendering, indexable dynamic pages, metadata optimization, fast load times, and search-friendly product architecture.\n\nDeveloped secure backend services with JWT authentication, role-based admin access, REST APIs, and robust business logic.\n\nModeled and implemented a relational database supporting thousands of products, orders, customers, stock management, and transactional workflows.\n\nIntegrated Mercado Pago payment processing and custom shipping flows.\n\nBuilt advanced e-commerce features: cart, checkout, search, filtering, order history, admin dashboard, stock control, promotions, and catalog management.\n\nDeployed and maintained infrastructure on a private VPS using Nginx, containers, and automated release workflows.\n\nEngineering Highlights\n\nImplemented queue-based processing to handle concurrent order volume safely and prevent race conditions during peak demand.\n\nOptimized platform performance, scalability, and maintainability for long-term growth.\n\nDelivered a business-focused system capable of scaling both technically and commercially.\n\nOutcome\n\nA high-performance online store positioned for growth through SEO acquisition, operational efficiency, and scalable architecture.",
+    "projects.project3.date": "2026",
     "projects.liveDemo": "Live Demo",
     "projects.viewCode": "View Code",
     "projects.viewDetails": "View Details",
@@ -213,8 +222,10 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.about": "Sobre Mí",
     "nav.skills": "Habilidades",
     "nav.experience": "Experiencia",
+    "nav.education": "Educación",
+    "nav.certifications": "Certificaciones",
+    "nav.global": "Global",
     "nav.projects": "Proyectos",
-    "nav.achievements": "Logros",
     "nav.contact": "Contacto",
 
     // Hero
@@ -322,6 +333,12 @@ const translations: Record<Language, Record<string, string>> = {
     "projects.project2.longDescription":
       "El Sistema de Gestión de Tickets es una solución integral diseñada para agilizar el proceso de creación, seguimiento y resolución de tickets de soporte. Esta aplicación full-stack combina el poder de Django en el backend con React en el frontend para ofrecer una experiencia de usuario perfecta.\n\nEl sistema cuenta con un sistema de autenticación robusto con control de acceso basado en roles, permitiendo diferentes niveles de acceso para administradores, personal de soporte y usuarios finales. Los usuarios pueden crear tickets, adjuntar archivos, añadir comentarios y seguir el estado de sus solicitudes en tiempo real.\n\nEl panel de administración proporciona herramientas potentes para gestionar tickets, incluyendo capacidades de asignación, configuración de prioridades, categorización e informes detallados. El dashboard ofrece información de un vistazo sobre volúmenes de tickets, tiempos de resolución y métricas de rendimiento del personal.\n\nEl frontend se construyó con React y Bootstrap, creando una interfaz responsiva e intuitiva que funciona en todos los dispositivos. El backend aprovecha el potente ORM de Django y el framework REST para proporcionar una API segura y escalable.\n\nEste proyecto muestra mi capacidad para construir aplicaciones complejas y basadas en datos con interfaces de usuario sofisticadas y sistemas backend robustos.",
     "projects.project2.date": "2024",
+    "projects.project3.title": "Mundo Figus Store",
+    "projects.project3.description":
+      "Plataforma e-commerce full-stack orientada a SEO, diseñada para escalar ventas online y adquisición orgánica.",
+    "projects.project3.longDescription":
+      "Mundo Figus Store — Full-Stack E-commerce Platform\n\nDesigned and developed a scalable, SEO-driven e-commerce platform for a retail client seeking to expand market reach and increase online sales through organic traffic growth. Built the entire solution end-to-end, acting as Full-Stack Engineer + DevOps Owner.\n\nCore Responsibilities\n\nArchitected a production-grade platform using Next.js, NestJS, PostgreSQL, Docker, and automated CI/CD pipelines.\n\nEngineered an SEO-first storefront with server-side rendering, indexable dynamic pages, metadata optimization, fast load times, and search-friendly product architecture.\n\nDeveloped secure backend services with JWT authentication, role-based admin access, REST APIs, and robust business logic.\n\nModeled and implemented a relational database supporting thousands of products, orders, customers, stock management, and transactional workflows.\n\nIntegrated Mercado Pago payment processing and custom shipping flows.\n\nBuilt advanced e-commerce features: cart, checkout, search, filtering, order history, admin dashboard, stock control, promotions, and catalog management.\n\nDeployed and maintained infrastructure on a private VPS using Nginx, containers, and automated release workflows.\n\nEngineering Highlights\n\nImplemented queue-based processing to handle concurrent order volume safely and prevent race conditions during peak demand.\n\nOptimized platform performance, scalability, and maintainability for long-term growth.\n\nDelivered a business-focused system capable of scaling both technically and commercially.\n\nOutcome\n\nA high-performance online store positioned for growth through SEO acquisition, operational efficiency, and scalable architecture.",
+    "projects.project3.date": "2026",
     "projects.liveDemo": "Demo en Vivo",
     "projects.viewCode": "Ver Código",
     "projects.viewDetails": "Ver Detalles",
@@ -357,4 +374,104 @@ const translations: Record<Language, Record<string, string>> = {
     "contact.emailMe": "Envíame un Email",
     "contact.copyright": "Todos los derechos reservados.",
   },
+  pt: {
+    "nav.skills": "Habilidades",
+    "nav.experience": "Experiência",
+    "nav.education": "Educação",
+    "nav.certifications": "Certificações",
+    "nav.global": "Global",
+    "nav.projects": "Projetos",
+    "nav.contact": "Contato",
+    "projects.project1.title": "Site de Leilões",
+    "projects.project1.description":
+      "Plataforma de lances em tempo real com WebSockets, autenticação de usuários e design responsivo em Django.",
+    "projects.project1.longDescription":
+      "Esta plataforma de leilões permite criar anúncios, enviar lances e acompanhar atualizações em tempo real com WebSockets.\n\nInclui autenticação e autorização, notificações ao vivo, UI responsiva e um painel administrativo para gestão de anúncios e usuários.\n\nO sistema foi desenvolvido com foco em experiência de usuário, desempenho e escalabilidade para ambientes de alta concorrência.",
+    "projects.project1.date": "2024",
+    "projects.project2.title": "Sistema de Gestão de Tickets",
+    "projects.project2.description":
+      "Plataforma full-stack com autenticação, operações CRUD e painel administrativo com Django e React.",
+    "projects.project2.longDescription":
+      "O sistema centraliza a criação, acompanhamento e resolução de tickets de suporte.\n\nPossui controle de acesso por papéis, comentários, anexos, histórico e painéis de monitoramento operacional.\n\nA aplicação combina backend robusto com interface responsiva para equipes de suporte e gestão.",
+    "projects.project2.date": "2024",
+    "projects.project3.title": "Mundo Figus Store",
+    "projects.project3.description":
+      "Plataforma e-commerce full-stack orientada a SEO para escalar vendas online e aquisição orgânica.",
+    "projects.project3.longDescription":
+      "Mundo Figus Store — Plataforma E-commerce Full-Stack\n\nProjetei e desenvolvi uma plataforma escalável orientada a SEO para ampliar alcance comercial e vendas online.\n\nArquitetura com Next.js, NestJS, PostgreSQL, Docker e CI/CD automatizado, com storefront SSR, páginas indexáveis e performance otimizada.\n\nImplementei autenticação JWT, painel administrativo por papéis, integrações de pagamento e fluxos de checkout, estoque e logística.\n\nResultado: loja de alto desempenho pronta para crescimento técnico e comercial.",
+    "projects.project3.date": "2026",
+    "projects.backToProjects": "Voltar aos Projetos",
+    "projects.technologies": "Tecnologias Utilizadas",
+    "projects.projectGallery": "Galeria do Projeto",
+    "projects.demoVideo": "Vídeo de Demonstração",
+    "projects.description": "Descrição",
+  },
+  ru: {
+    "nav.skills": "Навыки",
+    "nav.experience": "Опыт",
+    "nav.education": "Образование",
+    "nav.certifications": "Сертификаты",
+    "nav.global": "Международно",
+    "nav.projects": "Проекты",
+    "nav.contact": "Контакты",
+    "projects.project1.title": "Аукционная Платформа",
+    "projects.project1.description":
+      "Платформа для ставок в реальном времени с WebSockets, аутентификацией пользователей и адаптивным интерфейсом на Django.",
+    "projects.project1.longDescription":
+      "Платформа позволяет создавать лоты, делать ставки и получать обновления в реальном времени через WebSockets.\n\nРеализованы аутентификация и авторизация, live-уведомления, адаптивный интерфейс и админ-панель для управления лотами и пользователями.\n\nПроект ориентирован на UX, производительность и устойчивость под высокой нагрузкой.",
+    "projects.project1.date": "2024",
+    "projects.project2.title": "Система Управления Тикетами",
+    "projects.project2.description":
+      "Full-stack платформа с аутентификацией, CRUD-операциями и административной панелью на Django и React.",
+    "projects.project2.longDescription":
+      "Система упрощает создание, отслеживание и закрытие тикетов поддержки.\n\nПоддерживает ролевой доступ, комментарии, вложения, историю изменений и аналитические панели.\n\nРешение сочетает надежный backend и удобный адаптивный интерфейс для команд поддержки.",
+    "projects.project2.date": "2024",
+    "projects.project3.title": "Mundo Figus Store",
+    "projects.project3.description":
+      "Full-stack e-commerce платформа с SEO-фокусом для масштабирования онлайн-продаж и органического трафика.",
+    "projects.project3.longDescription":
+      "Mundo Figus Store — Full-Stack E-commerce Платформа\n\nЯ спроектировал и реализовал масштабируемую e-commerce платформу с упором на SEO для роста онлайн-продаж.\n\nАрхитектура построена на Next.js, NestJS, PostgreSQL, Docker и автоматизированном CI/CD, включая SSR-витрину и индексируемые динамические страницы.\n\nРеализованы JWT-аутентификация, ролевой админ-доступ, платежная интеграция, корзина, checkout, управление каталогом и складом.\n\nРезультат: производительная система, готовая к техническому и коммерческому росту.",
+    "projects.project3.date": "2026",
+    "projects.backToProjects": "Назад к Проектам",
+    "projects.technologies": "Использованные Технологии",
+    "projects.projectGallery": "Галерея Проекта",
+    "projects.demoVideo": "Демо Видео",
+    "projects.description": "Описание",
+  },
+  zh: {
+    "nav.skills": "技能",
+    "nav.experience": "经验",
+    "nav.education": "教育",
+    "nav.certifications": "证书",
+    "nav.global": "国际化",
+    "nav.projects": "项目",
+    "nav.contact": "联系",
+    "projects.project1.title": "拍卖网站",
+    "projects.project1.description":
+      "基于 WebSockets 的实时竞价平台，包含用户认证与响应式设计，使用 Django 构建。",
+    "projects.project1.longDescription":
+      "该拍卖平台支持创建商品、实时出价与即时更新。\n\n系统包含认证授权、实时通知、响应式界面以及用于管理商品和用户的后台。\n\n项目重点在于用户体验、性能与高并发场景下的稳定性。",
+    "projects.project1.date": "2024",
+    "projects.project2.title": "工单管理系统",
+    "projects.project2.description":
+      "基于 Django 与 React 的全栈平台，提供认证、CRUD 与管理后台。",
+    "projects.project2.longDescription":
+      "该系统用于高效管理支持工单的创建、跟踪与处理。\n\n支持角色权限、评论、附件、状态追踪和运营看板。\n\n后端可靠、前端响应式，适用于支持团队与管理场景。",
+    "projects.project2.date": "2024",
+    "projects.project3.title": "Mundo Figus Store",
+    "projects.project3.description":
+      "面向 SEO 的全栈电商平台，用于提升线上销售与自然流量增长。",
+    "projects.project3.longDescription":
+      "Mundo Figus Store — 全栈电商平台\n\n我为零售客户从 0 到 1 设计并开发了可扩展的 SEO 电商平台，目标是扩大市场覆盖并提升线上销售。\n\n技术架构采用 Next.js、NestJS、PostgreSQL、Docker 与自动化 CI/CD，构建了 SSR 店铺、可索引动态页面与高性能访问体验。\n\n后端实现 JWT 认证、角色权限、REST API，以及购物车、结账、订单、库存、促销和目录管理等核心能力。\n\n结果是一个高性能、可持续扩展、可支持业务增长的生产级在线商城。",
+    "projects.project3.date": "2026",
+    "projects.backToProjects": "返回项目",
+    "projects.technologies": "使用技术",
+    "projects.projectGallery": "项目画廊",
+    "projects.demoVideo": "演示视频",
+    "projects.description": "描述",
+  },
+}
+
+function isSupportedLanguage(value: string): value is Language {
+  return value === "en" || value === "es" || value === "pt" || value === "ru" || value === "zh"
 }

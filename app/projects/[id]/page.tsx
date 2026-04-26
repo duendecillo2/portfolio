@@ -8,11 +8,11 @@ import { useLanguage } from "@/contexts/language-context"
 import { useProjects } from "@/data/projects"
 import ImageCarousel from "@/components/ui/image-carousel"
 import YouTubeVideo from "@/components/ui/youtube-video"
-import Navbar from "@/components/ui/navbar"
+import { Navbar } from "@/components/ui/navbar"
 
 export default function ProjectPage() {
   const params = useParams()
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
   const projects = useProjects()
   const [mounted, setMounted] = useState(false)
 
@@ -28,12 +28,23 @@ export default function ProjectPage() {
   }
 
   if (!mounted || !project) {
+    const loadingText =
+      language === "es"
+        ? "Cargando proyecto..."
+        : language === "pt"
+          ? "Carregando projeto..."
+          : language === "ru"
+            ? "Загрузка проекта..."
+            : language === "zh"
+              ? "正在加载项目..."
+              : "Loading project..."
+
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-gray-100">
         <div className="fixed inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
         <Navbar />
         <div className="container mx-auto px-4 pt-24 flex items-center justify-center">
-          <div className="animate-pulse text-gray-400">Loading project...</div>
+          <div className="animate-pulse text-gray-400">{loadingText}</div>
         </div>
       </div>
     )
